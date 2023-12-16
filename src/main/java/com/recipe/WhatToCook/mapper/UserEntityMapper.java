@@ -7,5 +7,5 @@ import org.mapstruct.Mapper;
 public interface UserEntityMapper {
 
     UserDTO toDto(UserEntity user);
-    UserEntity toEntity(UserDTO dto); 
+    UserEntity toEntity(UserDTO dto);
 }
