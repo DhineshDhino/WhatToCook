@@ -24,4 +24,5 @@ private UserEntityMapperImpl userEntityMapper;
         List<UserEntity> all = userRepository.findAll();
         return all.stream().map(user -> userEntityMapper.toDto(user)).toList();
     }
+
 }
