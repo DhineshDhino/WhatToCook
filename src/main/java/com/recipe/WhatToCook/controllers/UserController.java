@@ -1,12 +1,24 @@
 package com.recipe.WhatToCook.controllers;
+import com.recipe.WhatToCook.DTO.UserDTO;
+import com.recipe.WhatToCook.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
 
 @RestController
 public class UserController {
-    @GetMapping("/hello")
-    public String home() {
-        return "Hello World";
+    @Autowired
+    public UserService userService;
+    @GetMapping(path="/userDetail/{name}",consumes = MediaType.ALL_VALUE,produces =MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity displayUserDetail(@PathVariable String name) {
+        UserDTO returnVal=userService.getUser(name);
+        return ResponseEntity.ok(returnVal);
+    }
+    @GetMapping(path="/allUser",produces = "application/json")
+    public ResponseEntity<List<UserDTO>> displayAllUser() {
+        return ResponseEntity.ok(userService.getAllUser());
     }
 }
