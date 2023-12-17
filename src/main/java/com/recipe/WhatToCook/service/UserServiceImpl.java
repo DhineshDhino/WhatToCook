@@ -24,4 +24,5 @@ private UserEntityMapperImpl userEntityMapper;*/
         //return all.stream().map(user -> userEntityMapper.toDto(user)).toList();
         return all.stream().map(user -> UserDTO.builder().firstName(user.getFirstName()).lastName(user.getLastName()).dateOfBirth(user.getDateOfBirth()).email(user.getEmail()).build()).toList();
     }
+
 }

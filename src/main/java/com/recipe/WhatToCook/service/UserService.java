@@ -10,4 +10,5 @@ import java.util.List;
 public interface UserService {
     UserDTO getUser(String name);
     List<UserDTO> getAllUser();
+
 }
