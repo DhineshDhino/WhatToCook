@@ -13,16 +13,23 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
-@Autowired
-private UserEntityMapperImpl userEntityMapper;
+    @Autowired
+    private UserEntityMapperImpl userEntityMapper;
 
     public UserDTO getUser(String name) {
         UserEntity byFirstName = userRepository.findByFirstName(name);
         return UserDTO.builder().firstName(byFirstName.getFirstName()).lastName(byFirstName.getLastName()).dateOfBirth(byFirstName.getDateOfBirth()).email(byFirstName.getEmail()).build();
     }
-    public List<UserDTO> getAllUser () {
+
+    public List<UserDTO> getAllUser() {
         List<UserEntity> all = userRepository.findAll();
         return all.stream().map(user -> userEntityMapper.toDto(user)).toList();
+    }
+
+    public UserDTO addUser(UserDTO userDTO) {
+        UserEntity userEntity = userEntityMapper.toEntity(userDTO);
+        UserEntity userEntity1 = userRepository.save(userEntity);
+        return userEntity1 == null ? null : userEntityMapper.toDto(userEntity1);
     }
 
 }

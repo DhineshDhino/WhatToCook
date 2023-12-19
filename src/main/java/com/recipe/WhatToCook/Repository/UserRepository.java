@@ -8,7 +8,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface UserRepository extends MongoRepository<UserEntity, String> {
+public interface UserRepository extends MongoRepository<UserEntity,String> {
     UserEntity findByFirstName(String name);
     List<UserEntity> findAll();
+
 }

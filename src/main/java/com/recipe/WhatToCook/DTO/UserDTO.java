@@ -9,6 +9,8 @@ import org.mapstruct.Mapper;
 
 @AllArgsConstructor
 @Builder
+@Setter
+@Getter
 public class UserDTO {
         @JsonProperty(value = "firstName")
         private String firstName;
