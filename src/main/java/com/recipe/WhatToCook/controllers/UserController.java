@@ -1,6 +1,9 @@
 package com.recipe.WhatToCook.controllers;
 import com.recipe.WhatToCook.DTO.UserDTO;
+import com.recipe.WhatToCook.exception.UserNotFoundException;
 import com.recipe.WhatToCook.service.UserService;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -9,13 +12,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@Slf4j
 public class UserController {
     @Autowired
     public UserService userService;
 
     @GetMapping(path = "/userDetail/{name}", consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity displayUserDetail(@PathVariable String name) {
-        UserDTO returnVal = userService.getUser(name);
+    public ResponseEntity<Object> displayUserDetail(@PathVariable String name) {
+        UserDTO returnVal = null;
+        try {
+            returnVal = userService.getUser(name);
+        } catch (UserNotFoundException e) {
+            return ResponseEntity.status(404).body("User not found");
+        }
         return ResponseEntity.ok(returnVal);
     }
 
@@ -28,6 +37,18 @@ public class UserController {
     public ResponseEntity<UserDTO> saveUser(@RequestBody UserDTO userDTO) {
         // Logic to save the user
         UserDTO savedUser = userService.addUser(userDTO);
+        return ResponseEntity.ok(savedUser);
+    }
+    @PutMapping("/users")
+    public ResponseEntity<Object> updateUser(@RequestBody UserDTO userDTO) {
+        // Logic to update the user
+        UserDTO savedUser = null;
+        try {
+            savedUser = userService.updateUser(userDTO);
+        } catch (UserNotFoundException e) {
+            log.error("User not found", e);
+            return ResponseEntity.status(404).body("User not found");
+        }
         return ResponseEntity.ok(savedUser);
     }
 
