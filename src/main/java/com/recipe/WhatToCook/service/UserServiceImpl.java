@@ -5,12 +5,14 @@ import com.recipe.WhatToCook.Repository.UserRepository;
 import com.recipe.WhatToCook.entity.UserEntity;
 import com.recipe.WhatToCook.exception.UserNotFoundException;
 import com.recipe.WhatToCook.mapper.UserEntityMapperImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
@@ -20,9 +22,10 @@ private UserEntityMapperImpl userEntityMapper;
     public UserDTO getUser(String name) throws UserNotFoundException {
         UserEntity byFirstName = userRepository.findByFirstName(name);
         if (byFirstName==null) {
+            log.error("User not found with the given firstName " + name);
             throw new UserNotFoundException("User not found with the given firstName " + name);
         }
-        return UserDTO.builder().firstName(byFirstName.getFirstName()).lastName(byFirstName.getLastName()).dateOfBirth(byFirstName.getDateOfBirth()).email(byFirstName.getEmail()).build();
+        return userEntityMapper.toDto(byFirstName);
     }
 
     public List<UserDTO> getAllUser() {

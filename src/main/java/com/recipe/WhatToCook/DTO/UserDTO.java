@@ -11,6 +11,7 @@ import org.mapstruct.Mapper;
 @Builder
 @Setter
 @Getter
+@EqualsAndHashCode
 public class UserDTO {
         @JsonProperty(value = "firstName")
         private String firstName;
