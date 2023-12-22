@@ -25,7 +25,7 @@ public class RecipeController {
         return ResponseEntity.ok(recipeDTO);
     }
     @PostMapping(path = "/recipe", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<RecipeDTO> saveRecipe(RecipeDTO recipeDTO) {
+    public ResponseEntity<RecipeDTO> saveRecipe(@RequestBody RecipeDTO recipeDTO) {
         RecipeDTO recipe = service.saveRecipe(recipeDTO);
         return ResponseEntity.ok(recipe);
     }
