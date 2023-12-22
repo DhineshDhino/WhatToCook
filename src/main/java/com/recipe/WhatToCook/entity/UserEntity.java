@@ -4,7 +4,11 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Getter @Setter @NoArgsConstructor @Builder @AllArgsConstructor
+@Getter
+@Setter
+@NoArgsConstructor
+@Builder
+@AllArgsConstructor
 @Document(collection = "user")
 public class UserEntity {
     @Id

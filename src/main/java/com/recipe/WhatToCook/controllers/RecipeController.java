@@ -2,20 +2,14 @@ package com.recipe.WhatToCook.controllers;
 import com.recipe.WhatToCook.DTO.RecipeDTO;
 import com.recipe.WhatToCook.exception.RecipeNotFoundException;
 import com.recipe.WhatToCook.service.RecipeService;
-import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import java.util.List;
 
-@AllArgsConstructor
-@Builder
-@Setter
-@Getter
-@EqualsAndHashCode
+@RestController
 public class RecipeController {
     @Autowired
     RecipeService service;
@@ -30,5 +24,18 @@ public class RecipeController {
         }
         return ResponseEntity.ok(recipeDTO);
     }
+    @PostMapping(path = "/recipe", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RecipeDTO> saveRecipe(RecipeDTO recipeDTO) {
+        RecipeDTO recipe = service.saveRecipe(recipeDTO);
+        return ResponseEntity.ok(recipe);
+    }
+
+
+    @GetMapping(path = "/Allrecipe",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<RecipeDTO>> getAllRecipes() {
+        List<RecipeDTO> recipes = service.getAllRecipes();
+        return ResponseEntity.ok(recipes);
+    }
+
 }
 

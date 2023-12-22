@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Getter @Setter @NoArgsConstructor
 @Builder @AllArgsConstructor
@@ -20,8 +21,8 @@ public class RecipeEntity {
     private String name;
     private String variant;
     private String owner;
-    private ArrayList<RecipeIngredient> ingredients;
-    private HashMap<String,Integer> ratios;
+    private List<RecipeIngredient> ingredients;
+    private Map<String,Integer> ratios;
     private String preparation;
     private String process;
     private List<String> garnish;

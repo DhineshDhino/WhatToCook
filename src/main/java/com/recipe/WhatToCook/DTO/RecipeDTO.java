@@ -19,7 +19,7 @@ public class RecipeDTO {
     private String name;
     private String variant;
     private String owner;
-    private ArrayList<RecipeIngredient> ingredients;
+    private List<RecipeIngredient> ingredients;
     private Map<String, Integer> ratios;
     private String preparation;
     private String process;

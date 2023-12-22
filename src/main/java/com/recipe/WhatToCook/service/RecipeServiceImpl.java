@@ -1,7 +1,6 @@
 package com.recipe.WhatToCook.service;
 
 import com.recipe.WhatToCook.DTO.RecipeDTO;
-import com.recipe.WhatToCook.Modal.RecipeIngredient;
 import com.recipe.WhatToCook.Modal.Time;
 import com.recipe.WhatToCook.Repository.RecipeRepository;
 import com.recipe.WhatToCook.entity.RecipeEntity;
@@ -13,10 +12,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 @Service
 @Slf4j
-public class RecipeServiceImpl {
+public class RecipeServiceImpl implements RecipeService {
 @Autowired
 public RecipeRepository recipeRepository;
 @Autowired
@@ -38,6 +38,10 @@ RecipeEntityMapper mapper;
         RecipeEntity ToBeUpdatedEntity=RecipeEntity.builder()._id(recipeEntity.get_id()).name(recipeDTO.getName()).variant(recipeDTO.getVariant()).owner(recipeDTO.getOwner()).ingredients(recipeDTO.getIngredients()).ratios((HashMap<String, Integer>) recipeDTO.getRatios()).preparation(recipeDTO.getPreparation()).process(recipeDTO.getProcess()).garnish(recipeDTO.getGarnish()).accompany(recipeDTO.getAccompany()).time((Time) recipeDTO.getTime()).build();
         RecipeEntity updatedRecipe =recipeRepository.save(ToBeUpdatedEntity);
         return mapper.toDto(updatedRecipe);
+    }
 
+    public List<RecipeDTO> getAllRecipes(){
+        List<RecipeEntity> all=recipeRepository.findAll();
+        return all.stream().map(recipe -> mapper.toDto(recipe)).toList();
     }
 }
