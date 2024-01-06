@@ -7,5 +7,8 @@ import java.util.Map;
 @Data
 public class IngredientDTO {
     private String name;
-    private String alias;
+    private String type;
+    private String tamilName;
+    private String tanglishName;
+
 }
