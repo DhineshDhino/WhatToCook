@@ -1,6 +1,6 @@
-package com.recipe.WhatToCook.mapper;
-import com.recipe.WhatToCook.DTO.UserDTO;
-import com.recipe.WhatToCook.entity.UserEntity;
+package com.recipe.what2cook.mapper;
+import com.recipe.what2cook.dto.UserDTO;
+import com.recipe.what2cook.entity.UserEntity;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

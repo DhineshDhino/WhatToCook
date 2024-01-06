@@ -1,4 +1,4 @@
-package com.recipe.WhatToCook.exception;
+package com.recipe.what2cook.exception;
 
 public class UserNotFoundException extends Exception{
 

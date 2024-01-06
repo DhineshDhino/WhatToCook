@@ -1,8 +1,7 @@
-package com.recipe.WhatToCook.service;
+package com.recipe.what2cook.service;
 
-import com.recipe.WhatToCook.DTO.UserDTO;
-import com.recipe.WhatToCook.entity.UserEntity;
-import com.recipe.WhatToCook.exception.UserNotFoundException;
+import com.recipe.what2cook.dto.UserDTO;
+import com.recipe.what2cook.exception.UserNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

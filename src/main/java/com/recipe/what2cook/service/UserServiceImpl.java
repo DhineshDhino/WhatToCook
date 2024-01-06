@@ -1,28 +1,39 @@
-package com.recipe.WhatToCook.service;
+package com.recipe.what2cook.service;
 
-import com.recipe.WhatToCook.DTO.UserDTO;
-import com.recipe.WhatToCook.Repository.UserRepository;
-import com.recipe.WhatToCook.entity.UserEntity;
-import com.recipe.WhatToCook.exception.UserNotFoundException;
-import com.recipe.WhatToCook.mapper.UserEntityMapperImpl;
+import com.recipe.what2cook.dto.UserDTO;
+import com.recipe.what2cook.repository.UserRepository;
+import com.recipe.what2cook.entity.UserEntity;
+import com.recipe.what2cook.exception.UserNotFoundException;
+import com.recipe.what2cook.mapper.UserEntityMapperImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService {
-    @Autowired
-    private UserRepository userRepository;
-@Autowired
-private UserEntityMapperImpl userEntityMapper;
+    private final UserRepository userRepository;
+
+private final UserEntityMapperImpl userEntityMapper;
+
+
+    public UserServiceImpl(UserRepository userRepository, UserEntityMapperImpl userEntityMapper) {
+        this.userRepository = userRepository;
+        this.userEntityMapper = userEntityMapper;
+    }
+
+    private static final String NOT_FOUND_MESSAGE = "User not found with the given firstName ";
+
 
     public UserDTO getUser(String name) throws UserNotFoundException {
         UserEntity byFirstName = userRepository.findByFirstName(name);
         if (byFirstName==null) {
-            throw new UserNotFoundException("User not found with the given firstName " + name);
+            log.error(NOT_FOUND_MESSAGE + name);
+            throw new UserNotFoundException(NOT_FOUND_MESSAGE + name);
         }
-        return UserDTO.builder().firstName(byFirstName.getFirstName()).lastName(byFirstName.getLastName()).dateOfBirth(byFirstName.getDateOfBirth()).email(byFirstName.getEmail()).build();
+        return userEntityMapper.toDto(byFirstName);
     }
 
     public List<UserDTO> getAllUser() {
@@ -32,17 +43,17 @@ private UserEntityMapperImpl userEntityMapper;
 
     public UserDTO addUser(UserDTO userDTO) {
         UserEntity userEntity = userEntityMapper.toEntity(userDTO);
-        UserEntity userEntity1 = userRepository.save(userEntity);
-        return userEntity1 == null ? null : userEntityMapper.toDto(userEntity1);
+        UserEntity savedUserEntity = userRepository.save(userEntity);
+        return userEntityMapper.toDto(savedUserEntity);
     }
 
     public UserDTO updateUser(UserDTO userDTO) throws UserNotFoundException {
         UserEntity userEntityInDB = userRepository.findByFirstName(userDTO.getFirstName());
         if (userEntityInDB == null) {
-            throw new UserNotFoundException("User not found with the given firstName " + userDTO.getFirstName());
+            throw new UserNotFoundException(NOT_FOUND_MESSAGE + userDTO.getFirstName());
         }
         UserEntity updatedUserEntity = UserEntity.builder()
-                ._id(userEntityInDB.get_id())
+                .id(userEntityInDB.getId())
                 .firstName(userDTO.getFirstName())
                 .lastName(userDTO.getLastName())
                 .dateOfBirth(userDTO.getDateOfBirth())

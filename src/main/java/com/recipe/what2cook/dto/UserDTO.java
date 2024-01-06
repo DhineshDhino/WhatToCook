@@ -1,16 +1,14 @@
-package com.recipe.WhatToCook.DTO;
+package com.recipe.what2cook.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
-import org.mapstruct.Mapper;
-
 
 
 @AllArgsConstructor
 @Builder
 @Setter
 @Getter
+@EqualsAndHashCode
 public class UserDTO {
         @JsonProperty(value = "firstName")
         private String firstName;

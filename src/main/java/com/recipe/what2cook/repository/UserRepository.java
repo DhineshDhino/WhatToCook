@@ -1,6 +1,6 @@
-package com.recipe.WhatToCook.Repository;
+package com.recipe.what2cook.repository;
 
-import com.recipe.WhatToCook.entity.UserEntity;
+import com.recipe.what2cook.entity.UserEntity;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
