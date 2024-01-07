@@ -1,7 +1,6 @@
-package com.recipe.what2cook.service;
+package com.recipe.what2cook.service.recipe;
 
 import com.recipe.what2cook.dto.RecipeDTO;
-import com.recipe.what2cook.model.Time;
 import com.recipe.what2cook.repository.RecipeRepository;
 import com.recipe.what2cook.entity.RecipeEntity;
 import com.recipe.what2cook.exception.RecipeNotFoundException;
@@ -37,9 +36,10 @@ public RecipeServiceImpl(RecipeRepository recipeRepository,RecipeEntityMapper re
         return mapper.toDto(savedRecipe);
     }
     public RecipeDTO updateRecipe(RecipeDTO recipeDTO){
-        RecipeEntity recipeEntity= recipeRepository.findByName(recipeDTO.getName());
-        RecipeEntity toBeUpdatedEntity=RecipeEntity.builder().id(recipeEntity.getId()).name(recipeDTO.getName()).variant(recipeDTO.getVariant()).owner(recipeDTO.getOwner()).ingredients(recipeDTO.getIngredients()).ratios((HashMap<String, Integer>) recipeDTO.getRatios()).preparation(recipeDTO.getPreparation()).process(recipeDTO.getProcess()).garnish(recipeDTO.getGarnish()).accompany(recipeDTO.getAccompany()).time((Time) recipeDTO.getTime()).build();
-        RecipeEntity updatedRecipe =recipeRepository.save(toBeUpdatedEntity);
+        RecipeEntity recipeEntity = recipeRepository.findByName(recipeDTO.getName());
+        RecipeEntity toBeUpdatedEntity = mapper.toEntity(recipeDTO);
+        toBeUpdatedEntity.setId(recipeEntity.getId());
+        RecipeEntity updatedRecipe = recipeRepository.save(toBeUpdatedEntity);
         return mapper.toDto(updatedRecipe);
     }
 

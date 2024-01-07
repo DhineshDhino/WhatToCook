@@ -1,4 +1,4 @@
-package com.recipe.what2cook.model;
+package com.recipe.what2cook.model.recipe;
 
 import lombok.*;
 
@@ -11,6 +11,7 @@ import lombok.*;
 @Builder
 public class RecipeIngredient{
     private String name;
-    private String quantity;
-    private String unit;
+    private String type;
+    private String tamilName;
+    private String tanglishName;
 }
